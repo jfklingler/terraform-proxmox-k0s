@@ -1,0 +1,87 @@
+apiVersion: k0sctl.k0sproject.io/v1beta1
+kind: Cluster
+metadata:
+  name: ${cluster_name}
+spec:
+  hosts:
+%{ for addr in controller_ips ~}
+  - role: controller
+    ssh:
+      address: ${addr}
+      user: ${controller_user}
+%{ if !controller_use_agent  ~}      
+      keyPath: ${controller_ssh_key}
+%{ endif ~}
+%{ if binary_path != null  ~}  
+    uploadBinary: true
+    k0sBinaryPath: ${binary_path}
+%{ endif ~}
+%{ endfor ~}
+
+%{ for pool in worker_pools ~}
+%{ for addr in pool.ip_addresses ~}
+  - role: worker
+    ssh:
+      address: ${addr}
+      user: ${worker_user}
+%{ if !worker_use_agent ~}      
+      keyPath: ${worker_ssh_key}
+%{ endif ~}
+%{ if pool.install_flags != []  ~} 
+    installFlags:
+%{ for flag in pool.install_flags ~}
+    - ${flag}
+%{ endfor ~}
+%{ endif ~}
+%{ if binary_path != null  ~}  
+    uploadBinary: true
+    k0sBinaryPath: ${binary_path}
+%{ endif ~}
+%{ endfor ~}
+%{ endfor ~}
+
+  k0s:
+    version: ${k0s_version}
+    config:
+      apiVersion: k0s.k0sproject.io/v1beta1
+      kind: Cluster
+      metadata:
+        name: k0s
+      spec:
+%{ if api_address != "" ~}
+        api:
+          externalAddress: ${api_address}
+          sans:
+          ${indent(10, yamlencode(api_sans))}
+%{ endif ~}
+        storage:
+          type: etcd
+        network:
+          podCIDR: ${pod_cidr}
+          serviceCIDR: ${service_cidr}
+          provider: kuberouter
+          calico: null
+          kuberouter:
+            mtu: 0
+            peerRouterIPs: ""
+            peerRouterASNs: ""
+            autoMTU: true
+          kubeProxy:
+            disabled: false
+            mode: iptables
+        podSecurityPolicy:
+          defaultPolicy: 00-k0s-privileged
+        telemetry:
+          enabled: false
+        installConfig:
+          users:
+            etcdUser: etcd
+            kineUser: kube-apiserver
+            konnectivityUser: konnectivity-server
+            kubeAPIserverUser: kube-apiserver
+            kubeSchedulerUser: kube-scheduler
+        images:
+          default_pull_policy: IfNotPresent
+        konnectivity:
+          agentPort: 8132
+          adminPort: 8133

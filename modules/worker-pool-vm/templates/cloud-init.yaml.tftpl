@@ -1,0 +1,50 @@
+#cloud-config
+
+package_update: true
+package_upgrade: ${upgrade}
+
+packages:
+- jq
+- nfs-common
+- open-iscsi
+
+users:
+- name: ${ssh_user}
+  groups: sudo
+  shell: /bin/bash
+  sudo: ['ALL=(ALL) NOPASSWD:ALL']
+  ssh_authorized_keys:
+    - ${ssh_key}
+
+preserve_hostname: false
+manage_etc_hosts: false
+hostname: ${hostname}
+
+disk_setup:
+  %{~ for disk in extra_disks ~}
+  /dev/${disk.device}:
+    table_type: 'mbr'
+    layout: True
+    overwrite: False
+  %{~ endfor ~}
+
+fs_setup:
+  %{~ for disk in extra_disks ~}
+  - label: ${disk.label},
+    filesystem: ext4
+    device: /dev/${disk.device}
+    partition: auto
+  %{~ endfor ~}
+
+mounts:
+  %{~ for disk in extra_disks ~}
+  - [ /dev/${disk.device}, ${disk.mount_point}, auto, "defaults" ]
+  %{~ endfor ~}
+
+runcmd_script_content:
+- &enable_iscsi |
+  systemctl enable iscsid
+  systemctl start iscsid
+
+runcmd:
+- [ sh, -c, *enable_iscsi ]
