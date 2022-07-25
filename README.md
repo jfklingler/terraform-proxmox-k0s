@@ -1,9 +1,9 @@
 # Proxmox k0s Kubernetes Cluster Module
 
-This is a collection of submodules that make it easier to manage [k0s Kubernetes clusters](https://k0sproject.io/) on the [Proxmox hypervisor](https://www.proxmox.com/).
+This module creates a [k0s Kubernetes clusters](https://k0sproject.io/) on the [Proxmox hypervisor](https://www.proxmox.com/).
 The [k0sctl](https://github.com/k0sproject/k0sctl) cluster manager is used for bootstrapping and managing the `k0s` clusters.
+There are a number of sub-modules used for configuring a complete cluster.
 
-* [Cluster](modules/cluster)
 * [Cluster SSH Config](modules/cluster-ssh)
 * [Control Plane (LXC)](modules/control-plane)
 * [Load Balancer (LXC)](modules/load-balancer)
@@ -11,7 +11,6 @@ The [k0sctl](https://github.com/k0sproject/k0sctl) cluster manager is used for b
 
 ## Compatibility
 This module is meant for use with Terraform 1.0+ and tested using Terraform 1.0+. If you find incompatibilities, please open an issue.
-
 
 ## Caveats
 Some modules make use of [danitso/proxmox](https://registry.terraform.io/providers/danitso/proxmox) ([GitHub](https://github.com/danitso/terraform-provider-proxmox)) specifically for writing cloud-init snippets for QEMU VMs.
