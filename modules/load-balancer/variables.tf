@@ -51,13 +51,13 @@ variable "memory" {
   })
 
   default = {
-    megabytes = 512
+    megabytes = 256
   }
 }
 
 locals {
   memory = defaults(var.memory, {
-    swap = 512
+    swap = 128
   })
 }
 

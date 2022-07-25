@@ -63,7 +63,7 @@ variable "memory" {
   })
 
   default = {
-    megabytes = 512
+    megabytes = 1024
   }
 }
 
