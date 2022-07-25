@@ -1,6 +1,6 @@
 # Proxmox k0s Kubernetes Cluster Module
 
-This module creates a [k0s Kubernetes clusters](https://k0sproject.io/) on the [Proxmox hypervisor](https://www.proxmox.com/).
+This module creates [k0s Kubernetes clusters](https://k0sproject.io/) on the [Proxmox hypervisor](https://www.proxmox.com/).
 The [k0sctl](https://github.com/k0sproject/k0sctl) cluster manager is used for bootstrapping and managing the `k0s` clusters.
 There are a number of sub-modules used for configuring a complete cluster.
 
@@ -10,7 +10,8 @@ There are a number of sub-modules used for configuring a complete cluster.
 * [Worker Pool (QEMU)](modules/worker-pool-vm)
 
 ## Compatibility
-This module is meant for use with Terraform 1.0+ and tested using Terraform 1.0+. If you find incompatibilities, please open an issue.
+This module is meant for use with Terraform 1.0+ and tested using Terraform 1.0. If you find incompatibilities, please open an issue.
+Proxmox 6.4, 7.1, and 7.2 have been used in live environments. Not all features have been tested with all listed versions of proxmox.
 
 ## Caveats
 Some modules make use of [danitso/proxmox](https://registry.terraform.io/providers/danitso/proxmox) ([GitHub](https://github.com/danitso/terraform-provider-proxmox)) specifically for writing cloud-init snippets for QEMU VMs.
