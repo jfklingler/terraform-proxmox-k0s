@@ -4,7 +4,7 @@ This module is responsible for creating the k0s cluster controller nodes as LXC 
 When creating more than a single controller, odd numbers are recommended for `node_count`.
 All controller nodes will be created on the same proxmox node.
 
-This module's outputs are compatible with the outputs of the [load-balancer](../load-balancer/) module so that either can be used as the `control_plane` input of the [primary module](../../).
+This module's outputs are compatible with the outputs of the [load-balancer](../load-balancer/) module so that either can be used as the `control_plane` input of the [primary module](/../../).
 This allows both small, single node control planes as well as larger, multi-node control planes to be used interchangeably.
 
 ## Networking

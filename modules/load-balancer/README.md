@@ -4,7 +4,7 @@ This module is responsible for creating a k0s cluster control plane HAProxy load
 This module need only be used when creating a multi-node control plane.
 It is created using the outputs of the [control-plane](../control-plane/) module in addition to the standard container configuration.
 
-This module's outputs are compatible with the outputs of the [control-plane](../control-plane/) module so that either can be used as the `control_plane` input of the [primary module](../../).
+This module's outputs are compatible with the outputs of the [control-plane](../control-plane/) module so that either can be used as the `control_plane` input of the [primary module](/../../).
 This allows both small, single node control planes as well as larger, multi-node control planes to be used interchangeably.
 
 ## Networking
