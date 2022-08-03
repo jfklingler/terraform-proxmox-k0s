@@ -4,10 +4,10 @@ This module creates [k0s Kubernetes clusters](https://k0sproject.io/) on the [Pr
 The [k0sctl](https://github.com/k0sproject/k0sctl) cluster manager is used for bootstrapping and managing the `k0s` clusters.
 There are a number of sub-modules used for configuring a complete cluster.
 
-* [Cluster SSH Config](modules/cluster-ssh/)
-* [Control Plane (LXC)](modules/control-plane/)
-* [Load Balancer (LXC)](modules/load-balancer/)
-* [Worker Pool (QEMU)](modules/worker-pool-vm/)
+* [cluster-ssh](modules/cluster-ssh/) - shared cluster SSH configuration
+* [control-plane](modules/control-plane/) - LXC container based controller pool configuration
+* [load-balancer](modules/load-balancer/) - LXC container based control plane load balancer configuration
+* [worker-pool-vm](modules/worker-pool-vm/) - QEMU VM based worker pool configuration
 
 ## Providers
 These modules make use of the [telmate/proxmox](https://registry.terraform.io/providers/Telmate/proxmox) and [danitso/proxmox](https://registry.terraform.io/providers/danitso/proxmox) providers.

@@ -9,7 +9,7 @@ variable "local_storage" {
   description = <<-EOT
   The directory in which to write out necessary files (k0sctl binary, k0sctl config, kube config, etc.).
   For example 'local_storage = "$${abspath(path.module)}/generated-files"'.
-  It is recommended to gitignore this directory if the parent directory is under source control."
+  It is recommended to gitignore this directory if the parent directory is under source control.
   EOT
 
   type = string
