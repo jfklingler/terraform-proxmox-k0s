@@ -21,11 +21,22 @@ Proxmox 6.4, 7.1, and 7.2 have been used in live environments.
 Not all features have been tested with all listed versions of proxmox.
 
 ## Caveats
+
+### Providers
 Some modules make use of [danitso/proxmox](https://registry.terraform.io/providers/danitso/proxmox) ([GitHub](https://github.com/danitso/terraform-provider-proxmox)) specifically for writing cloud-init snippets for QEMU VMs.
 This provider appears to be...not currently maintained.
 Testing has revealed that snippet resources, and posibly the resulting CDROM volumes, might not be properly destroyed.
 These might require deletion after a `terraform destroy` for a complete cleanup.
 
-These modules were developed over time as I experimented with different features.
+### Proxmox
+When cloning VM templates, Proxmox places a mutex lock on the source.
+When creating a more-than-small number of VMs, this will lead to VM creation failures.
+Rerunning `terraform apply` will usually rectify the situation.
+The problem can also be avoided by specifying `-parallelism=2` (or other suitably small number) during the apply.
+This obviously comes at the expense of speed, but waiting longer may be preferable to dealing with multiple apply iterations to complete the cluster setup.
+
+### Personal/Homelab Project
+Cloud ops is my day job, but these modules were developed as a personal/homelab project.
+Only features and configurations that I've experimented with or use regularly, or features that would obviously be needed by thrid parties, are exposed in these modules.
 No attempt was made to accommodate all possible permutations of cluster and/or VM configurations.
-If a particular feature you need is not exposed, please open an issue.
+If a particular feature you need is not exposed, please open an issue or pull request.
