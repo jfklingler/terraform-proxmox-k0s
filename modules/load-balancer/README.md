@@ -1,16 +1,16 @@
-# Cluster Control Plane Configuration (LXC)
+# Cluster Controller Load Balancer Configuration (LXC)
 
-This module is responsible for creating the k0s cluster controller nodes as LXC containers.
-When creating more than a single controller, odd numbers are recommended for `node_count`.
-All controller nodes will be created on the same proxmox node.
+This module is responsible for creating a k0s cluster control plane HAProxy load balancer configured according to the [k0s guidelines](https://docs.k0sproject.io/v1.23.6+k0s.2/high-availability/) using a QEMU virtual machine.
+This module need only be used when creating a multi-node control plane.
+It is created using the outputs of the [control-plane](../control-plane/) module in addition to the standard container configuration.
 
-This module's outputs are compatible with the outputs of the [load-balancer](../load-balancer/) module so that either can be used as the `control_plane` input of the [primary module](../../).
+This module's outputs are compatible with the outputs of the [control-plane](../control-plane/) module so that either can be used as the `control_plane` input of the [primary module](../../).
 This allows both small, single node control planes as well as larger, multi-node control planes to be used interchangeably.
 
 ## Networking
 
 While "normal" DHCP would not be desireable since IPs could change, it's entirely possible to configre DHCP for static assignments.
-Unfortunately, neither of the proxmox providers support retrieving the IP address from a VM or container that uses DHCP.
+Unfortunately, neither of the Proxmox providers support retrieving the IP address from a VM or container that uses DHCP.
 The IP addresses are needed by `k0sctl` for cluster configuration.
 Because of this, we must assign IPs statically during VM creation.
 The way this has been designed in these modules is that a subnet CIDR block is allocated for each "pool" of VMs, be they controllers or workers.

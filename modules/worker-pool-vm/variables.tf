@@ -250,6 +250,6 @@ variable "taints" {
 
 variable "install_flags" {
   description = "A list of additional k0s install flags. Default empty."
-  type    = list(string)
-  default = []
+  type        = list(string)
+  default     = []
 }

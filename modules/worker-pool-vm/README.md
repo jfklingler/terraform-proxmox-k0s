@@ -1,13 +1,13 @@
 # Cluster Worker Pool Configuration (QEMU)
 
-This module is responsible for creating k0s cluster worker VMs.
+This module is responsible for creating k0s cluster worker nodes using QEMU virtual machines.
 All VMs will be created on the same proxmox node.
 Multiple pools can be used to distribute VMs across proxmox nodes.
 
 ## Networking
 
 While "normal" DHCP would not be desireable since IPs could change, it's entirely possible to configre DHCP for static assignments.
-Unfortunately, the [proxmox provider](https://registry.terraform.io/providers/telmate/proxmox) does not support retrieving the IP address from a VM that uses DHCP.
+Unfortunately, neither of the Proxmox providers support retrieving the IP address from a VM or container that uses DHCP.
 The IP addresses are needed by `k0sctl` for cluster configuration.
 Because of this, we must assign IPs statically during VM creation.
 The way this has been designed in these modules is that a subnet CIDR block is allocated for each "pool" of VMs, be they controllers or workers.

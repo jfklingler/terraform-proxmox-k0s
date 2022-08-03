@@ -5,10 +5,10 @@ The primary use for this module, while utilizing the key genreation feature, is 
 
 ## Caution
 
-The [cluster module](../cluster) requires SSH private keys either on disk or in the SSH agent on the machine running terraform.
+The [primary module](../../) requires SSH private keys either on disk or in the SSH agent on the machine running terraform.
 If the SSH agent is not used, the private keys must written to disk because the [k0sctl](https://github.com/k0sproject/k0sctl) config file only accepts private key paths.
 *The private keys should not, under any circumstances, be committed to source control.*
-See the [cluster module](../cluster) documentation for details.
+See the [primary module](../../) documentation for details.
 
 ## Alternatives
 
@@ -17,8 +17,9 @@ Any module which is designed to accept the output of this module will also accep
 ```hcl
 {
   user        # string; user name for SSH connection
-  private_key # string; private key contents
+  private_key # string; private key contents; not required if SSH agent will be used
   public_key  # string; public key contents
+  use_agent   # bool; whether or not the SSH agent will be used by k0sctl to connect to VMs
 }
 ```
 
