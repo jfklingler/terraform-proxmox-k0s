@@ -5,7 +5,7 @@ output "controller" {
   * user - The user name to connect with
   * private_key - The private key content; null if not generated or specified as an input
   * public_key - The public key content
-  * use_agent - Whether the SSH agent will be used by k0sctl to connect to VMs 
+  * use_agent - Whether the SSH agent will be used by k0sctl to connect to VMs
 
   CAUTION: The private key contents, if specified or generated, will be written to disk on the host running terraform because k0sctl requires either a file path or use of the SSH agent.
   EOT
@@ -27,7 +27,7 @@ output "worker" {
   * user - The user name to connect with
   * private_key - The private key content; null if not generated or specified as an input
   * public_key - The public key content
-  * use_agent - Whether the SSH agent will be used by k0sctl to connect to VMs 
+  * use_agent - Whether the SSH agent will be used by k0sctl to connect to VMs
 
   CAUTION: The private key contents, if specified or generated, will be written to disk on the host running terraform because k0sctl requires either a file path or use of the SSH agent.
   EOT
