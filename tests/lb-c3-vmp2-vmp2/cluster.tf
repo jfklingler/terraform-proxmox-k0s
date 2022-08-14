@@ -56,7 +56,9 @@ module "load_balancer" {
     storage = "vms"
   }
 
-  control_plane = module.control_plane
+  control_plane = [
+    module.control_plane,
+  ]
 
   ssh = module.ssh.controller
 }

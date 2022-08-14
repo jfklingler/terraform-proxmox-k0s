@@ -1,7 +1,7 @@
 output "ip_addresses" {
   description = "The IP addresses of the containers in the control_plane pool"
 
-  value = var.control_plane.ip_addresses
+  value = local.ip_addresses
 }
 
 output "external_api" {
