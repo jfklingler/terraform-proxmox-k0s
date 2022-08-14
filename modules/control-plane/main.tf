@@ -11,7 +11,7 @@ resource "proxmox_lxc" "controller" {
     <em>Managed by Terraform</em>
   EOT
 
-  hostname = "k0s-${var.cluster_name}-controller-${count.index}"
+  hostname = "k0s-${var.cluster_name}-controller${var.name == null ? "" : "-${var.name}"}-${count.index}"
 
   ostemplate   = local.os.template
   full         = !local.os.linked

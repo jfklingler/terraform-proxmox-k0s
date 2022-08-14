@@ -1,19 +1,19 @@
 variable "cluster_name" {
-  description = "The name of the k0s cluster; informational; used in proxmox resource names"
+  description = "The name of the k0s cluster; used in proxmox resources and VM hostnames"
 
   type    = string
   default = "default"
 }
 
 variable "name" {
-  description = "The name of the worker pool; informational; used in proxmox resource names"
+  description = "The name of the worker pool; used in proxmox resources and VM hostnames"
 
   type    = string
   default = "default"
 }
 
 variable "node_count" {
-  description = "How many VMs to create. Should be an odd number in most cases. Default 1."
+  description = "How many VMs to create. Default 1."
 
   type    = number
   default = 1

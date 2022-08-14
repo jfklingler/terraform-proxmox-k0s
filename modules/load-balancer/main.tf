@@ -64,7 +64,7 @@ resource "proxmox_lxc" "load_balancer" {
   provisioner "file" {
     destination = "/etc/haproxy/haproxy.cfg"
     content = templatefile("${path.module}/templates/haproxy.cfg.tftpl", {
-      ip_addrs = var.control_plane.ip_addresses
+      ip_addrs = local.ip_addresses
       stats    = var.stats
     })
 

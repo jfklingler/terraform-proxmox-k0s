@@ -17,8 +17,7 @@ The `telmate/proxmox` provider is used for the management of containers and VMs.
 ## Compatibility
 This module is meant for use with Terraform 1.0+ and tested using Terraform 1.0.
 If you find incompatibilities, please open an issue.
-Proxmox 6.4, 7.1, and 7.2 have been used in live environments.
-Not all features have been tested with all listed versions of proxmox.
+This has been tested with Proxmox 6.4, 7.1, and 7.2 but not all features have been tested with all listed versions of proxmox.
 
 ## Caveats
 
@@ -36,7 +35,14 @@ The problem can also be avoided by specifying `-parallelism=2` (or other suitabl
 This obviously comes at the expense of speed, but waiting longer may be preferable to dealing with multiple apply iterations to complete the cluster setup.
 
 ### Personal/Homelab Project
-Cloud ops is my day job, but these modules were developed as a personal/homelab project.
+Cloudops is my day job, but these modules were developed as a personal/homelab project.
 Only features and configurations that I've experimented with or use regularly, or features that would obviously be needed by thrid parties, are exposed in these modules.
 No attempt was made to accommodate all possible permutations of cluster and/or VM configurations.
 If a particular feature you need is not exposed, please open an issue or pull request.
+
+### Examples/Tests
+Yeah, there kind of aren't any yet.
+There are two "tests" which really just amount to a minimal config and an all-the-things config.
+I use these locally for testing changes on _my_ Proxmox cluster so, while not particurly great for copy-pasta, they do represent working configurations.
+IP allocations, node names, etc. are obviously unique to my setup.
+The only missing bits are the Proxmox credentials as defined in the `variables.tf` files.

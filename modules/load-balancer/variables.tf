@@ -1,5 +1,5 @@
 variable "cluster_name" {
-  description = "The name of the k0s cluster; informational; used in proxmox resource names"
+  description = "The name of the k0s cluster; informational; used in proxmox resources and VM hostnames"
 
   type    = string
   default = "default"
@@ -190,9 +190,9 @@ variable "control_plane" {
   * ip_addresses - The IP addresses of the control plane nodes
   EOT
 
-  type = object({
+  type = list(object({
     ip_addresses = list(string)
-  })
+  }))
 }
 
 variable "dns_name" {
