@@ -20,3 +20,9 @@ Care must taken that any DHCP service on the network will not allocate IPs from 
 A base index into that CIDR block is then used to select an IP for each VM.
 This combination lets us share a single subnet for multiple pools.
 For example, if the subnet is `10.1.2.128/26`, the controller load balancer could use index 0, giving it IP `10.1.2.128`, the controllers (pool of 3) could use a base index of 1, giving them IPs `10.1.2.129`-`10.1.2.131`, and finally a worker pool (pool of 10) could use a base index of 5, giving them IPs `10.1.2.133`-`10.1.2.142`.
+
+## Proxmox HA
+Presumably, if you're using this module, you have multiple control plane nodes.
+If everything is running on a single Proxmox node, then that's all well and good.
+If you _also_ have multiple Proxmox nodes and are distributing the control plane nodes across Proxmox nodes, you should really configure Proxmox HA for this VM.
+With the control plane nodes distributed across multiple Proxmox nodes, the HAProxy load balancer becomes the single point of failure.

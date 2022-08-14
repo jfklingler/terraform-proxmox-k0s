@@ -1,8 +1,15 @@
 variable "cluster_name" {
-  description = "The name of the k0s cluster; informational; used in proxmox resource names"
+  description = "The name of the k0s cluster; used in proxmox resources and VM hostnames"
 
   type    = string
   default = "default"
+}
+
+variable "name" {
+  description = "The name of the controller pool; used in proxmox resources and VM hostnames"
+
+  type    = string
+  default = null
 }
 
 variable "pve" {

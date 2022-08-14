@@ -6,10 +6,15 @@ module "ssh" {
   }
 }
 
-module "control_plane" {
+locals {
+  nodes = ["pve1n01", "pve1n02"]
+}
+
+module "control_plane_1" {
   source = "../../modules/control-plane"
 
-  node_count = 3
+  name       = "n01"
+  node_count = 2
 
   pve = {
     node = "pve1n01"
@@ -24,6 +29,36 @@ module "control_plane" {
     cidr        = "192.168.16.0/22"
     subnet_cidr = "192.168.18.0/23"
     base_index  = 1
+    gateway     = "192.168.16.1"
+  }
+
+  root_disk = {
+    storage = "vms"
+  }
+
+  ssh = module.ssh.controller
+}
+
+module "control_plane_2" {
+  source = "../../modules/control-plane"
+
+  name       = "n02"
+  node_count = 1
+
+  pve = {
+    node = "pve1n02"
+  }
+
+  os = {
+    template = "vm-sources:vztmpl/ubuntu-20.04-standard_20.04-1_amd64.tar.gz"
+  }
+
+  network = {
+    bridge      = "vmbr0"
+    cidr        = "192.168.16.0/22"
+    subnet_cidr = "192.168.18.0/23"
+    # control_plane_1 base_index + node_count
+    base_index  = 1 + 2
     gateway     = "192.168.16.1"
   }
 
@@ -57,7 +92,8 @@ module "load_balancer" {
   }
 
   control_plane = [
-    module.control_plane,
+    module.control_plane_1,
+    module.control_plane_2,
   ]
 
   ssh = module.ssh.controller

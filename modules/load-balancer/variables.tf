@@ -1,5 +1,5 @@
 variable "cluster_name" {
-  description = "The name of the k0s cluster; informational; used in proxmox resource names"
+  description = "The name of the k0s cluster; informational; used in proxmox resources and VM hostnames"
 
   type    = string
   default = "default"
