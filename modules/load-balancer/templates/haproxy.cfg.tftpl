@@ -23,8 +23,8 @@ global
 
 defaults
     log     global
-    mode    http
-    option  httplog
+    mode    tcp
+    option  tcplog
     option  dontlognull
     timeout connect 4s
     timeout client  20s
@@ -40,31 +40,27 @@ defaults
 
 frontend kubeAPI
     bind :6443
-    mode tcp
     default_backend kubeAPI_backend
 frontend konnectivity
     bind :8132
-    mode tcp
     default_backend konnectivity_backend
 frontend controllerJoinAPI
     bind :9443
-    mode tcp
     default_backend controllerJoinAPI_backend
 
 backend kubeAPI_backend
-    mode tcp
+    balance leastconn
 %{ for addr in ip_addrs ~}
-    server k0s-controller-${element(split("/", element(split(".", addr), 3)), 0)} ${element(split("/", addr), 0)} check check-ssl verify none
+    server k0s-controller-${element(split("/", element(split(".", addr), 3)), 0)} ${element(split("/", addr), 0)}:6443 check check-ssl verify none
 %{ endfor ~}
 backend konnectivity_backend
-    mode tcp
+    balance leastconn
 %{ for addr in ip_addrs ~}
-    server k0s-controller-${element(split("/", element(split(".", addr), 3)), 0)} ${element(split("/", addr), 0)} check check-ssl verify none
+    server k0s-controller-${element(split("/", element(split(".", addr), 3)), 0)} ${element(split("/", addr), 0)}:8132 check check-ssl verify none
 %{ endfor ~}
 backend controllerJoinAPI_backend
-    mode tcp
 %{ for addr in ip_addrs ~}
-    server k0s-controller-${element(split("/", element(split(".", addr), 3)), 0)} ${element(split("/", addr), 0)} check check-ssl verify none
+    server k0s-controller-${element(split("/", element(split(".", addr), 3)), 0)} ${element(split("/", addr), 0)}:9443 check check-ssl verify none
 %{ endfor ~}
 
 %{ if stats.enabled  ~}
