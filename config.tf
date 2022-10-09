@@ -23,12 +23,12 @@ resource "local_file" "k0sctl_yaml" {
     controller_ips       = var.control_plane.ip_addresses
     controller_user      = var.ssh.controller.user
     controller_use_agent = var.ssh.controller.use_agent
-    controller_ssh_key   = local_sensitive_file.controller_ssh_pk.filename
+    controller_ssh_key   = var.ssh.controller.use_agent ? "" : local_sensitive_file.controller_ssh_pk[0].filename
 
     worker_pools     = local.worker_pools
     worker_user      = var.ssh.worker.user
     worker_use_agent = var.ssh.worker.use_agent
-    worker_ssh_key   = local_sensitive_file.worker_ssh_pk.filename
+    worker_ssh_key   = var.ssh.controller.use_agent ? "" : local_sensitive_file.worker_ssh_pk[0].filename
 
     cluster_name = var.name
     k0s_version  = local.k0sctl.k0s_version
